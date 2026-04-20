@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz - Sesiune Activă</title>
+    <style>
+        body { font-family: sans-serif; padding: 40px; text-align: center; background: #f0f2f5; }
+        .container { background: white; padding: 30px; border-radius: 10px; display: inline-block; min-width: 400px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        #timer { font-size: 28px; color: #d9534f; margin: 20px 0; font-weight: bold; }
+        .q-block { text-align: left; margin-bottom: 20px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+        .blocked-msg { color: #d9534f; font-size: 20px; font-weight: bold; }
+        button { padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 id="title">Se verifică sesiunea...</h1>
+    <div id="timer">Timp: 15:00</div>
+    <div id="quiz-area"></div>
+    <div id="action-area">
+        <button id="submit-btn" style="display:none;" onclick="finishQuiz()">Trimite Răspunsurile</button>
+    </div>
+</div>
+
+<script>
+    let timeLeft = 900; // 15 minute
+    let activeStage = 0;
+    let questions = [];
+    let timerInterval;
+
+    async function initQuiz() {
+        const res = await fetch('/questions/active');
+        const data = await res.json();
+
+        if (data.completed) {
+            // DACĂ ESTE DEJA COMPLETAT
+            document.getElementById('title').innerText = "Etapa " + data.stage;
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('quiz-area').innerHTML = `
+                <div class="blocked-msg">
+                    <p>Ai finalizat deja această etapă!</p>
+                    <p>Scorul tău salvat: ${data.score} puncte.</p>
+                    <p>Nu poți reface quiz-ul.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // DACĂ NU ESTE COMPLETAT, ÎNCĂRCĂM ÎNTREBĂRILE
+        activeStage = data.stage;
+        questions = data.questions;
+        document.getElementById('title').innerText = "Etapa " + activeStage;
+        
+        const area = document.getElementById('quiz-area');
+        area.innerHTML = questions.map((q, i) => `
+            <div class="q-block">
+                <p><strong>${i+1}. ${q.question}</strong></p>
+                <input type="radio" name="q${i}" value="1"> ${q.option1}<br>
+                <input type="radio" name="q${i}" value="2"> ${q.option2}<br>
+                <input type="radio" name="q${i}" value="3"> ${q.option3}
+            </div>
+        `).join('');
+
+        document.getElementById('submit-btn').style.display = 'inline-block';
+        startTimer();
+    }
+
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            let mins = Math.floor(timeLeft / 60);
+            let secs = timeLeft % 60;
+            document.getElementById('timer').innerText = `Timp rămas: ${mins}:${secs < 10 ? '0' : ''}${secs}`;
+            
+            if (timeLeft <= 0) {
+                alert("Timpul a expirat!");
+                finishQuiz();
+            }
+        }, 1000);
+    }
+
+    async function finishQuiz() {
+        clearInterval(timerInterval);
+        let correctCount = 0;
+
+        questions.forEach((q, i) => {
+            const sel = document.querySelector(`input[name="q${i}"]:checked`);
+            if (sel && parseInt(sel.value) === q.correct_option) correctCount++;
+        });
+
+        const res = await fetch('/submit-quiz', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                stage: activeStage,
+                correctCount: correctCount,
+                timeLeft: timeLeft
+            })
+        });
+
+        if (res.ok) {
+            const result = await res.json();
+            document.getElementById('quiz-area').innerHTML = `
+                <h2 style="color: green">Etapa ${activeStage} finalizată cu succes!</h2>
+                <p>Punctaj obținut: ${result.score}</p>
+                <p>Mult succes în continuare.</p>
+            `;
+            document.getElementById('submit-btn').style.display = 'none';
+            document.getElementById('timer').style.display = 'none';
+        } else {
+            const error = await res.text();
+            alert(error);
+            location.reload(); // Reîncarcă pentru a vedea statusul de blocat
+        }
+    }
+
+    initQuiz();
+</script>
+
+</body>
+</html>

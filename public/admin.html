@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head><title>Admin Control</title></head>
+<body>
+    <h1>Panou Control Server</h1>
+    <p>Alege etapa activă pentru toți jucătorii:</p>
+    <button onclick="setStage(1)">Activează Etapa 1</button>
+    <button onclick="setStage(2)">Activează Etapa 2</button>
+    <button onclick="setStage(3)">Activează Etapa 3</button>
+
+    <script>
+        async function setStage(s) {
+            await fetch('/admin/set-stage', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ stage: s })
+            });
+            alert("Serverul a fost setat pe Etapa " + s);
+        }
+    </script>
+</body>
+</html>
