@@ -61,6 +61,7 @@ body::before {
     justify-content: space-between;
     align-items: center;
     height: 70px;
+    padding: 0 20px;
 }
 
 .logo {
@@ -69,13 +70,20 @@ body::before {
     background-image: url('assets/logo-generat-nobg.png');
     background-size: contain;
     background-repeat: no-repeat;
-    background-position: left;
+    background-position: left center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+    filter: drop-shadow(0 0 12px rgba(228, 87, 46, 0.4));
 }
 
 .nav-links a {
     color: var(--vintage-cream);
     text-decoration: none;
-    margin-right: 25px;
+    margin-right: 40px;
     font-size: 15px;
     font-weight: 300;
     text-transform: uppercase;
