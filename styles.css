@@ -1,0 +1,341 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url(assets/fundal.png);
+
+    /* important pentru navbar fixed */
+    padding-top: 110px;
+}
+
+/* NAVBAR */
+.navbar {
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background: #0a1a26;
+    backdrop-filter: blur(6px);
+
+    padding: 18px 0;
+    z-index: 1000;
+
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.container-hero {
+    display: flex;
+    /* Pune elementele pe orizontală */
+    align-items: center;
+    /* Aliniază-le vertical pe mijloc */
+    justify-content: space-between;
+    /* Pune textul în stânga și Gogu în dreapta */
+    padding: 0 40px;
+    /* Margine interioară ca să nu atingă marginile ecranului */
+    margin-top: 40px;
+}
+
+.hero-text {
+    flex: 1;
+    /* Textul ocupă spațiul rămas disponibil */
+    margin-top: 10px;
+}
+
+.text-header {
+    font-size: 70px;
+    color: #f5e6c8;
+    margin: 40px;
+    /* Resetăm marginile ca să nu strice alinierea */
+}
+
+.subtext-header {
+    font-size: 28px;
+    color: #e4572e;
+    margin: 40px;
+}
+
+.descriere-mica {
+    color: #f5e6c8;
+    /* Sau ce culoare dorești */
+    max-width: 600px;
+    /* Limităm lățimea textului ca să nu se întindă prea mult */
+}
+
+.gogu {
+    width: 500px;
+    height: 500px;
+    background-image: url("assets/rowo_racheta.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    flex-shrink: 0;
+    /* Împiedică imaginea să se micșoreze dacă ecranul e mic */
+}
+
+/* CONTAINER */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+.logo {
+    width: 220px;
+    height: 90px;
+
+    background-image: url('assets/logo_generat.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left center;
+
+    flex-shrink: 0;
+
+    /* mic glow retro */
+    /*filter: drop-shadow(0 0 4px rgba(255, 220, 180, 0.15));*/
+}
+
+/* NAV LINKS */
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #f5e6c8;
+    font-size: 16px;
+    letter-spacing: 1px;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* underline animat */
+.nav-links a::after {
+    content: "";
+    position: absolute;
+    width: 0%;
+    height: 2px;
+    bottom: -6px;
+    left: 0;
+    background: #e4572e;
+    transition: 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+/* LOGIN BUTTON */
+.login-btn {
+    background: linear-gradient(90deg, #e4572e, #c75b2a);
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
+
+.login-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(228, 87, 46, 0.4);
+}
+
+.box {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+}
+
+/* layout split */
+.descriere_rowo {
+    display: flex;
+    gap: 50px;
+    align-items: flex-start;
+}
+
+/* titlu stanga */
+.descriere_rowo_titlu {
+    font-size: 34px;
+    font-weight: 800;
+    color: #e4572e;
+    min-width: 360px;
+    letter-spacing: 2px;
+    margin-top: 50px;
+}
+
+/* text dreapta */
+.descriere_rowo_text {
+    flex: 1;
+    line-height: 1.6;
+}
+
+.galerie_foto {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+
+
+
+.meetthetrainers {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+
+.meettheorga {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+.trainings {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+
+.quiz {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+
+.leaderbord {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+.faq {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+.wheretomeet {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
+
+
+.sponsors_and_partners {
+    margin: 40px 60px;
+    padding: 30px;
+
+    background: rgba(10, 26, 38, 0.72);
+    border: 1px solid rgba(228, 87, 46, 0.45);
+    border-radius: 14px;
+
+    color: #f5e6c8;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(5px);
+
+    transition: 0.25s ease;
+}
