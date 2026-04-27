@@ -76,8 +76,8 @@ body::before {
     color: var(--vintage-cream);
     text-decoration: none;
     margin-right: 25px;
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 15px;
+    font-weight: 300;
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: 0.3s;
@@ -143,6 +143,10 @@ body::before {
     background-repeat: no-repeat;
     filter: drop-shadow(0 0 20px rgba(228, 87, 46, 0.3));
     animation: float 4s ease-in-out infinite;
+
+    /* Fade effect from transparent at bottom to solid at top */
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
+    mask-image: linear-gradient(to top, transparent 0%, black 25%);
 }
 
 @keyframes float {
@@ -287,11 +291,12 @@ body::before {
 
 .login-btn {
     font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
     font-weight: 300;
     background: transparent;
     border: 1px solid var(--vintage-cream);
     color: var(--vintage-cream);
-    padding: 8px 20px;
+    padding: 8px 15px 8px 15px;
     border-radius: 50px;
     cursor: pointer;
     transition: all 0.3s ease;
