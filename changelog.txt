@@ -1,0 +1,10 @@
+- Refresh the buttons styling.
+- Add more styling to the "Trainings" section
+- Add more styling to the "Quiz" section
+- Add more styling to the "Leaderboard" section
+- Add more styling to the "FAQ" section
+- Add more styling to the "Where to Meet" section
+- Add more styling to the "Sponsors & Partners" section
+- Add more styling to the "Epilog" section
+- By adding more styling, all the sections should have a similar look and feel.
+- More styling means: Text size and font differences between the title and the description, and also a better, more modern yet retro, more glassy, more rounded, more rounded-glassy look for the elements.
