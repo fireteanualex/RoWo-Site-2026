@@ -70,11 +70,19 @@ body::before {
     border-radius: 10px;
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
 }
 
 .answer:hover {
     border-color: var(--accent-orange);
     transform: scale(1.02);
+}
+
+.answer.checked {
+    background: rgba(228, 87, 46, 0.2);
+    border-color: var(--accent-orange);
+    box-shadow: 0 0 10px rgba(228, 87, 46, 0.3);
 }
 
 /* next button */
@@ -87,6 +95,9 @@ body::before {
     color: white;
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
 }
 
 .next-btn:hover {
