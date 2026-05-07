@@ -22,7 +22,6 @@
     <nav class="navbar">
         <div class="container nav-container">
             <div class="logo">
-                <div class="gogupelogo"></div>
             </div>
             <div class="menu-toggle" onclick="toggleMenu()">
     ☰
@@ -308,6 +307,7 @@
     </main>
 
     <footer class="main-footer">
+        <div class="laika-ascunsa-footer"></div>
         <div class="container footer-grid">
             <div class="footer-col brand-col">
                 <div class="footer-logo"></div>
@@ -385,6 +385,14 @@ function toggleFaq(element) {
 
 function toggleMenu() {
     document.querySelector('.nav-links').classList.toggle('active');
+    document.querySelector('.navbar').classList.toggle('active');
+    const toggle = document.querySelector('.menu-toggle');
+    toggle.classList.toggle('active');
+    if (toggle.classList.contains('active')) {
+        toggle.innerHTML = '✕';
+    } else {
+        toggle.innerHTML = '☰';
+    }
 }
 // Toate creditele pentru meniu responsive la simiuc :)))
 </script>

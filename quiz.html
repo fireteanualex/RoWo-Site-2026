@@ -19,10 +19,10 @@
         <p class="question">Care este rolul centrului de presiune într-o rachetă?</p>
 
         <div class="answers">
-            <button class="answer">Determină viteza maximă</button>
-            <button class="answer">Influențează stabilitatea zborului</button>
-            <button class="answer">Controlează consumul de combustibil</button>
-            <button class="answer">Reduce temperatura motorului</button>
+            <button class="answer" onclick="selectAnswer(this)">Determină viteza maximă</button>
+            <button class="answer" onclick="selectAnswer(this)">Influențează stabilitatea zborului</button>
+            <button class="answer" onclick="selectAnswer(this)">Controlează consumul de combustibil</button>
+            <button class="answer" onclick="selectAnswer(this)">Reduce temperatura motorului</button>
         </div>
 
         <button class="next-btn">Next →</button>
@@ -30,6 +30,13 @@
     </div>
 
 </div>
+
+<script>
+function selectAnswer(element) {
+    document.querySelectorAll('.answer').forEach(btn => btn.classList.remove('checked'));
+    element.classList.add('checked');
+}
+</script>
 
 </body>
 </html>

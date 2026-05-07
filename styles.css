@@ -54,6 +54,7 @@ body::before {
     border: 1px solid var(--border-color);
     border-radius: 100px;
     z-index: 1000;
+    transition: border-radius 0.4s ease;
 }
 
 .nav-container {
@@ -73,7 +74,7 @@ body::before {
     background-position: left center;
     transition: all 0.3s ease;
     cursor: pointer;
-    position:relative;
+    position: relative;
     overflow: visible;
 }
 
@@ -100,7 +101,7 @@ body::before {
 /* HERO SECTION */
 .hero {
     padding-top: 150px;
-    padding-bottom: 80px;
+    padding-bottom: 40px;
 }
 
 .hero-grid {
@@ -153,18 +154,15 @@ body::before {
     background-repeat: no-repeat;
     filter: drop-shadow(0 0 20px rgba(228, 87, 46, 0.3));
     /*animation: float 4s ease-in-out infinite;*/
-transition: transform 0.2s ease-out;
+    transition: transform 0.2s ease-out;
     /* Fade effect from transparent at bottom to solid at top */
     -webkit-mask-image: linear-gradient(to top, transparent 0%, black 25%);
     mask-image: linear-gradient(to top, transparent 0%, black 25%);
 }
 
 
-@keyframes seduceracheta {
+@keyframes seduceracheta {}
 
-
-    
-}
 @keyframes float {
 
     0%,
@@ -237,9 +235,10 @@ transition: transform 0.2s ease-out;
     border: 1px solid var(--border-color);
     padding: 50px;
     border-radius: 30px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     transition: 0.4s ease;
-    position: relative; /* ADAUGAT: Permite elementelor din interior (Gogu) să se ancoreze aici */
+    position: relative;
+    /* ADAUGAT: Permite elementelor din interior (Gogu) să se ancoreze aici */
     overflow: visible;
 }
 
@@ -247,24 +246,30 @@ transition: transform 0.2s ease-out;
 .about-layout {
     display: flex;
     gap: 50px;
-    margin-top: 120px; /* Spațiu extra sus pentru a face loc capului lui Gogu */
+    margin-top: 80px;
+    /* Spațiu extra sus pentru a face loc capului lui Gogu */
 }
 
 /* 3. Stilul pentru Gogu (Laika) care pândește */
 .laika-ascunsa {
     position: absolute;
-    top: -193px;              /* mai sus, pentru că imaginea e mai înaltă */
-    right: 120px;             /* mai aproape de margine */
-    
-    width: 220px;             /* ajustează după cum vrei */
-    height: 260px;            /* IMPORTANT: mai înalt */
+    top: -193px;
+    /* mai sus, pentru că imaginea e mai înaltă */
+    right: 120px;
+    /* mai aproape de margine */
+
+    width: 220px;
+    /* ajustează după cum vrei */
+    height: 260px;
+    /* IMPORTANT: mai înalt */
 
     background-image: url('assets/gogu_ascunsa.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
 
-    z-index: 5;               /* IMPORTANT: peste container, nu sub */
+    z-index: 5;
+    /* IMPORTANT: peste container, nu sub */
     pointer-events: none;
 
     animation: floatGogu 3s ease-in-out infinite;
@@ -275,18 +280,23 @@ transition: transform 0.2s ease-out;
 
 .laika-ascunsa-stanga {
     position: absolute;
-    top: 50px;              /* mai sus, pentru că imaginea e mai înaltă */
-    left: -133px;             /* mai aproape de margine */
-    
-    width: 220px;             /* ajustează după cum vrei */
-    height: 260px;            /* IMPORTANT: mai înalt */
+    top: 50px;
+    /* mai sus, pentru că imaginea e mai înaltă */
+    left: -133px;
+    /* mai aproape de margine */
+
+    width: 220px;
+    /* ajustează după cum vrei */
+    height: 260px;
+    /* IMPORTANT: mai înalt */
 
     background-image: url('assets/gogu_ascunsa_stanga.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom center;
 
-    z-index: 5;               /* IMPORTANT: peste container, nu sub */
+    z-index: 5;
+    /* IMPORTANT: peste container, nu sub */
     pointer-events: none;
 
     animation: floatGogu 3s ease-in-out infinite;
@@ -326,7 +336,7 @@ transition: transform 0.2s ease-out;
 @media (max-width: 850px) {
     .about-layout {
         flex-direction: column;
-        margin-top: 100px;
+        margin-top: 70px;
         gap: 30px;
     }
 
@@ -338,10 +348,15 @@ transition: transform 0.2s ease-out;
     }
 
     .laika-ascunsa {
-        right: 50%;
-        transform: translateX(50%); /* Îl centrează pe mobil */
-        width: 140px;
-        top: -90px;
+        right: 30%;
+        transform: translateX(50%);
+        /* Move to the right */
+        width: 200px;
+        top: -198px;
+    }
+
+    .laika-ascunsa-stanga {
+        display: none;
     }
 }
 
@@ -354,15 +369,16 @@ transition: transform 0.2s ease-out;
 
 @media (max-width: 978px) {
 
-   .grid-3 {
-    grid-template-columns: repeat(2, 1fr);
-   }
-} 
+    .grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media (max-width: 768px) {
 
-   .grid-3 {
-    grid-template-columns: repeat(1, 1fr);
-} 
+    .grid-3 {
+        grid-template-columns: repeat(1, 1fr);
+    }
 
 
 
@@ -492,10 +508,26 @@ transition: transform 0.2s ease-out;
 
 /* FOOTER STYLING (DROWO STYLE) */
 .main-footer {
+    position: relative;
     background: rgba(5, 12, 18, 0.95);
     border-top: 1px solid var(--border-color);
     padding: 80px 0 30px 0;
-    margin-top: 100px;
+    margin-top: 50px;
+}
+
+.laika-ascunsa-footer {
+    position: absolute;
+    top: -190px;
+    right: 120px;
+    width: 220px;
+    height: 260px;
+    background-image: url('assets/gogu_ascunsa.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    z-index: 5;
+    pointer-events: none;
+    animation: floatGogu 3s ease-in-out infinite;
 }
 
 .footer-grid {
@@ -611,6 +643,13 @@ transition: transform 0.2s ease-out;
         text-align: center;
     }
 
+    .laika-ascunsa-footer {
+        right: 30%;
+        transform: translateX(50%);
+        width: 200px;
+        top: -198px;
+    }
+
     .footer-logo {
         margin: 0 auto 20px auto;
     }
@@ -637,10 +676,11 @@ transition: transform 0.2s ease-out;
 .trainer-img {
     width: 100%;
     height: 180px;
-    background: rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 15px;
     margin-bottom: 15px;
-    background-image: url('assets/trainer-placeholder.png'); /* optional */
+    background-image: url('assets/trainer-placeholder.png');
+    /* optional */
     background-size: cover;
     background-position: center;
 }
@@ -672,6 +712,9 @@ transition: transform 0.2s ease-out;
     color: var(--vintage-cream);
     cursor: pointer;
     transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
 }
 
 .tab-btn:hover {
@@ -708,7 +751,19 @@ transition: transform 0.2s ease-out;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 25px; /* Puțin mai mult padding decât la tab-uri */
+    padding: 15px 25px;
+    /* Puțin mai mult padding decât la tab-uri */
+}
+
+.faq-trigger strong {
+    font-family: 'Montserrat', sans-serif;
+    text-transform: capitalize;
+    font-weight: 600;
+}
+
+.faq-body p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
 }
 
 /* Răspunsul - ascuns implicit */
@@ -722,7 +777,8 @@ transition: transform 0.2s ease-out;
 
 /* Când întrebarea e activă (clasa adăugată de JS) */
 .faq-container.open .faq-body {
-    max-height: 200px; /* Sau cât e nevoie pentru text */
+    max-height: 200px;
+    /* Sau cât e nevoie pentru text */
     padding: 15px 25px;
     opacity: 1;
 }
@@ -735,26 +791,37 @@ transition: transform 0.2s ease-out;
 .gogupelogo {
     position: absolute;
     /* Ajustează aceste valori până când Gogu stă exact unde vrei */
-    top: -30px;         /* Îl ridică puțin deasupra logo-ului */
-    left: 20px;         /* Îl mută mai la dreapta față de marginea logo-ului */
-    
+    top: -30px;
+    /* Îl ridică puțin deasupra logo-ului */
+    left: 20px;
+    /* Îl mută mai la dreapta față de marginea logo-ului */
+
     width: 120px;
     height: 70px;
     background-image: url('assets/gogu_culcat_bg.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    
-    z-index: 10;        /* Să fie deasupra logo-ului */
-    pointer-events: none; /* Să nu blocheze click-ul pe logo */
-    
+
+    z-index: 10;
+    /* Să fie deasupra logo-ului */
+    pointer-events: none;
+    /* Să nu blocheze click-ul pe logo */
+
     /* Opțional: O mică animație de respirație */
     animation: breathingGogu 3s ease-in-out infinite;
 }
 
 @keyframes breathingGogu {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.05); }
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 .menu-toggle {
@@ -762,12 +829,15 @@ transition: transform 0.2s ease-out;
     font-size: 28px;
     cursor: pointer;
     color: var(--vintage-cream);
+    transition: transform 0.3s ease;
 }
 
 @media (max-width: 850px) {
 
     .nav-container {
-        height: 80px;
+        height: auto;
+        min-height: 80px;
+        flex-wrap: wrap;
     }
 
     .menu-toggle {
@@ -775,14 +845,15 @@ transition: transform 0.2s ease-out;
         z-index: 1100;
     }
 
+    .navbar.active {
+        border-radius: 30px;
+    }
+
     .nav-links {
-        position: absolute;
-        top: 100%;
-        left: 0;
+        position: static;
         width: 100%;
-        background: var(--glass-bg);
-        backdrop-filter: blur(15px);
-        border-top: 1px solid var(--border-color);
+        background: transparent;
+        border-top: none;
 
         display: flex;
         flex-direction: column;
