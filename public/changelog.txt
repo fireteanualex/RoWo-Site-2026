@@ -1,0 +1,8 @@
+
+- Q&A Questions should be Montserrat font, initcap text.
+- In phone page, when i click menu button, the navbar should "extend" downwards, and show the menu buttons.
+- Login textboxes aren't centered in the container.
+- Login button should be uppercase montserrat 300
+- Remove the no account option.
+- In index page, on phone view, in the about section, the image of gogu is too small. Expand it and make it be on top of the upper border of container.
+- Make all the sections a bit closer to eachother.
