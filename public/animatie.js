@@ -9,7 +9,7 @@ window.addEventListener("scroll", () => {
 
     const scrollY = window.scrollY;
     const offset = scrollY * 0.5;
-    
+
     // Aplicăm parallax-ul
     gogu.style.transform = `translateY(-${offset}px)`;
 
@@ -22,7 +22,7 @@ window.addEventListener("scroll", () => {
         // Blocăm ecranul
         isLocked = true;
         document.body.style.overflow = "hidden";
-        
+
         // Animăm lansarea
         gogu.style.transition = "transform 1.5s ease-in";
         gogu.style.transform = `translateY(calc(-${offset}px - 150vh))`;
