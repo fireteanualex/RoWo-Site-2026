@@ -31,7 +31,7 @@
                 <a href="#trainings">Trainings</a>
                 <a href="#faq">FAQ</a>
                 <a href="#contact">Contact</a>
-                <button class="login-btn" onclick="openLoginModal()">
+                <button class="login-btn" onclick="location.href='login/'">
                     <span>LOGIN </span>
                     <span> → </span>
                 </button>
@@ -114,25 +114,36 @@
                     <div class="training-item">
                         <span class="step-num">01</span>
                         <div class="step-info">
-                            <h4>Design & Aerodinamică</h4>
-                            <p>Utilizarea software-ului OpenRocket pentru simularea stabilității și a traiectoriei de
-                                zbor.</p>
+                            <h4>Introducere in Rachetomodelism</h4>
+                            <p>Noțiuni de bază despre rachete și principiile de funcționare.</p>
                         </div>
                     </div>
                     <div class="training-item">
                         <span class="step-num">02</span>
                         <div class="step-info">
-                            <h4>Propulsie și Siguranță</h4>
-                            <p>Studiul motoarelor cu combustibil solid, manevrarea încărcăturilor pirotehnice și
-                                protocoale de siguranță.</p>
+                            <h4>Legal & Safety</h4>
+                            <p>Reglementări și protocoale esențiale de siguranță pentru manevrarea materialelor.</p>
                         </div>
                     </div>
                     <div class="training-item">
                         <span class="step-num">03</span>
                         <div class="step-info">
-                            <h4>Electronică de bord</h4>
-                            <p>Configurarea altimetrelor și a sistemelor de recuperare pentru o aterizare controlată.
-                            </p>
+                            <h4>Stabilitate</h4>
+                            <p>Calculul centrului de masă, centrului de presiune și asigurarea zborului stabil.</p>
+                        </div>
+                    </div>
+                    <div class="training-item">
+                        <span class="step-num">04</span>
+                        <div class="step-info">
+                            <h4>OpenRocket</h4>
+                            <p>Simularea traiectoriei și optimizarea design-ului folosind software dedicat.</p>
+                        </div>
+                    </div>
+                    <div class="training-item">
+                        <span class="step-num">05</span>
+                        <div class="step-info">
+                            <h4>Constructii</h4>
+                            <p>Asamblarea propriu-zisă a rachetei miniaturale și a sistemului de recuperare.</p>
                         </div>
                     </div>
                 </div>
@@ -148,19 +159,17 @@
             <div class="section-content">
                 <p class="highlight-text">Demonstrează că ești cel mai bun.</p>
                 <div class="grid-2">
-                    <div class="sub-content">
+                    <div class="sub-content" id="quiz-section-content">
                         <h4>Teorie Tehnică</h4>
                         <p>Completează quiz-ul nostru pentru a-ți testa cunoștințele înainte de workshop.</p>
-                        <button class="btn" onclick="location.href='quiz.html'">
+                        <button class="btn" onclick="checkQuizAccess(event); if(!event.defaultPrevented) location.href='quiz/'">
                                     Start Quiz
                         </button>
                     </div>
                     <div class="sub-content">
                         <h4>Top Ingineri</h4>
-                        <ul class="placeholder-list">
-                            <li>1. Popescu Andrei - 980pt</li>
-                            <li>2. Ionescu Maria - 945pt</li>
-                            <li>3. Constantinescu D. - 890pt</li>
+                        <ul class="placeholder-list" id="leaderboard-list">
+                            <li>Se încarcă...</li>
                         </ul>
                     </div>
                 </div>
@@ -398,6 +407,69 @@ function toggleMenu() {
 </script>
 
 <script src="animatie.js"></script>
+<script src="auth.js"></script>
+<script>
+// Preluare leaderboard
+fetch('/api/leaderboard')
+    .then(r => r.json())
+    .then(data => {
+        const list = document.getElementById('leaderboard-list');
+        list.innerHTML = '';
+        data.forEach((team, index) => {
+            list.innerHTML += `<li>${index + 1}. ${team.team_name} - ${team.total_score}pt</li>`;
+        });
+        if(data.length === 0) list.innerHTML = '<li>Niciun scor încă.</li>';
+    })
+    .catch(e => console.error("Leaderboard error:", e));
+
+// Logica dinamică pentru secțiunea Quiz
+document.addEventListener("DOMContentLoaded", () => {
+    const quizSection = document.getElementById("quiz-section-content");
+    const stageNames = {
+        1: "Introducere",
+        2: "Stabilitate",
+        3: "OpenRocket",
+        4: "Constructii"
+    };
+
+    if (localStorage.getItem("team_name")) {
+        fetch("/questions/active")
+            .then(res => {
+                if (res.ok) return res.json();
+                throw new Error("Not logged in");
+            })
+            .then(data => {
+                if (data.stage >= 1 && data.stage <= 4) {
+                    if (data.completed) {
+                        quizSection.innerHTML = `
+                            <h4>Teorie Tehnică</h4>
+                            <p>Ai completat quiz-ul pentru <b>Etapa ${data.stage}: ${stageNames[data.stage]}</b>.</p>
+                            <p>Așteaptă activarea următoarei etape de către admin.</p>
+                        `;
+                    } else {
+                        quizSection.innerHTML = `
+                            <h4>Quiz Curent</h4>
+                            <p>Urmează să susții quiz-ul pentru: <br><b>Etapa ${data.stage}: ${stageNames[data.stage]}</b>.</p>
+                            <button class="btn" onclick="location.href='quiz/'">Start Quiz</button>
+                        `;
+                    }
+                } else {
+                    quizSection.innerHTML = `
+                        <h4>Felicitări! 🎉</h4>
+                        <p>Ați parcurs toate etapele teoretice ale workshop-ului cu succes.</p>
+                    `;
+                }
+            })
+            .catch(err => console.log(err));
+    } else {
+        quizSection.innerHTML = `
+            <h4>Teorie Tehnică</h4>
+            <p>Conectează-te pentru a vedea quiz-ul disponibil pentru echipa ta.</p>
+            <button class="btn" onclick="location.href='login/'">Login</button>
+        `;
+    }
+});
+</script>
 
 </body>
 

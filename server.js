@@ -57,19 +57,20 @@ app.post("/submit-quiz", (req, res) => {
     
     const { stage, correctCount, timeLeft } = req.body;
     const team_id = req.session.team_id;
-    const column = `stage${stage}`;
+    const stageCol = `stage${stage}`;
+    const timeCol = `time_stage${stage}`;
 
-    db.query(`SELECT ${column} FROM scores WHERE team_id = ?`, [team_id], (err, result) => {
-        if (result[0] && result[0][column] !== 0) {
+    db.query(`SELECT ${stageCol} FROM scores WHERE team_id = ?`, [team_id], (err, result) => {
+        if (result[0] && result[0][stageCol] !== 0) {
             return res.status(403).send("Ai trimis deja răspunsurile pentru această etapă!");
         }
 
-        const bonusPuncte = Math.floor(timeLeft / 20);
-        const punctajEtapa = (correctCount * 10) + bonusPuncte;
+        const scoreEtapa = correctCount * 10;
+        const timeBonus = Math.floor(timeLeft / 20);
 
-        db.query(`UPDATE scores SET ${column} = ? WHERE team_id = ?`, [punctajEtapa, team_id], (err) => {
+        db.query(`UPDATE scores SET ${stageCol} = ?, ${timeCol} = ? WHERE team_id = ?`, [scoreEtapa, timeBonus, team_id], (err) => {
             if (err) return res.status(500).send(err);
-            res.json({ score: punctajEtapa });
+            res.json({ score: scoreEtapa + timeBonus });
         });
     });
 });
@@ -80,6 +81,17 @@ app.post("/submit-quiz", (req, res) => {
 app.post("/admin/set-stage", (req, res) => {
     const { stage } = req.body;
     db.query("UPDATE settings SET config_value = ? WHERE config_key = 'active_stage'", [stage], () => res.send("OK"));
+});
+
+// ==========================================
+// 5. Ruta Leaderboard
+// ==========================================
+app.get("/api/leaderboard", (req, res) => {
+    const query = "SELECT t.team_name, s.total_score FROM scores s JOIN teams t ON s.team_id = t.id WHERE t.team_name LIKE 'Echipa%' ORDER BY s.total_score DESC";
+    db.query(query, (err, result) => {
+        if (err) return res.status(500).send("Eroare db");
+        res.json(result);
+    });
 });
 
 // Ruta de logout

@@ -1,0 +1,145 @@
+:root {
+    --bg-navy: #0a1a26;
+    --accent-orange: #e4572e;
+    --vintage-cream: #f5e6c8;
+    --glass-bg: rgba(10, 26, 38, 0.7);
+    --border-color: rgba(245, 230, 200, 0.15);
+}
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-navy);
+    background-image: url('../assets/fundal.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: var(--vintage-cream);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* grain effect */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: url('https://www.transparenttextures.com/patterns/stardust.png');
+    opacity: 0.15;
+    z-index: 1;
+}
+
+/* container */
+.login-container {
+    position: relative;
+    z-index: 2;
+}
+
+/* login box */
+.login-box {
+    background: var(--glass-bg);
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    margin-top: 60px;
+
+    transition: 0.3s;
+}
+
+.login-box:hover {
+    border-color: rgba(228, 87, 46, 0.4);
+}
+
+/* titles */
+.login-box h1 {
+    font-family: 'Tinos', serif;
+    margin: 0;
+    font-size: 36px;
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 30px;
+}
+
+/* inputs */
+.input-group {
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    font-size: 12px;
+    opacity: 0.7;
+}
+
+.input-group input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+    background: transparent;
+    color: var(--vintage-cream);
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: var(--accent-orange);
+}
+
+/* button */
+.btn {
+    width: 100%;
+    background: var(--accent-orange);
+    border: none;
+    padding: 12px;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+    text-transform: uppercase;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(228, 87, 46, 0.3);
+}
+
+/* extra */
+.extra {
+    margin-top: 20px;
+    font-size: 13px;
+}
+
+.extra a {
+    color: var(--accent-orange);
+    text-decoration: none;
+}
+
+/* gogu login */
+.gogu-login {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 150px;
+    background-image: url('../assets/gogu_ascunsa.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 3;
+}

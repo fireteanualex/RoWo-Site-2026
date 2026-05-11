@@ -17,6 +17,7 @@ CREATE TABLE questions (
     option1 VARCHAR(255),
     option2 VARCHAR(255),
     option3 VARCHAR(255),
+    option4 VARCHAR(255),
     correct_option INT
 );
 
@@ -26,7 +27,12 @@ CREATE TABLE scores (
     stage1 INT DEFAULT 0,
     stage2 INT DEFAULT 0,
     stage3 INT DEFAULT 0,
-    total_score INT AS (stage1 + stage2 + stage3), -- Calculat automat de baza de date
+    stage4 INT DEFAULT 0,
+    time_stage1 INT DEFAULT 0,
+    time_stage2 INT DEFAULT 0,
+    time_stage3 INT DEFAULT 0,
+    time_stage4 INT DEFAULT 0,
+    total_score INT AS (stage1 + stage2 + stage3 + stage4 + time_stage1 + time_stage2 + time_stage3 + time_stage4), -- Calculat automat de baza de date
     FOREIGN KEY (team_id) REFERENCES teams(id)
 );
 
@@ -45,6 +51,6 @@ INSERT INTO teams (team_name, password) VALUES ('Echipa 1', '1234'), ('Echipa 2'
 INSERT INTO scores (team_id) VALUES (1), (2);
 
 -- Întrebări de test (Etapa 1 și 2)
-INSERT INTO questions (stage, question, option1, option2, option3, correct_option) VALUES
-(1, 'Cat fac 5x5?', '20', '25', '30', 2),
-(2, 'Capitala Italiei?', 'Milano', 'Napoli', 'Roma', 3);
+INSERT INTO questions (stage, question, option1, option2, option3, option4, correct_option) VALUES
+(1, 'Cat fac 5x5?', '20', '25', '30', '35', 2),
+(2, 'Capitala Italiei?', 'Milano', 'Napoli', 'Roma', 'Veneția', 3);

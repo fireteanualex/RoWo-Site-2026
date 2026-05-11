@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz | Rocket Workshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Tinos:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="quiz.css">
+</head>
+
+<body>
+    <div class="stars-overlay"></div>
+
+
+    <div class="quiz-container">
+        <div class="gogu-quiz"></div>
+        <div class="quiz-box" id="quiz-box">
+            <div class="quiz-type-label" id="quiz-type-label">Se încarcă...</div>
+            <h2 id="quiz-title">Quiz Tehnic</h2>
+            
+            <div id="quiz-content">
+                <p>Se încarcă întrebările...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../auth.js"></script>
+    <script>
+        let questions = [];
+        let current = 0;
+        let correctCount = 0;
+        let stage = 1;
+        let startTime;
+
+        const stageNames = {
+            1: "Introducere",
+            2: "Stabilitate",
+            3: "OpenRocket",
+            4: "Constructii"
+        };
+
+        fetch("/questions/active")
+            .then(res => {
+                if(res.status === 401) {
+                    window.location.href = '../login/';
+                    throw new Error("Neautorizat");
+                }
+                return res.json();
+            })
+            .then(data => {
+                stage = data.stage;
+                document.getElementById("quiz-type-label").innerText = `Etapa: ${stageNames[stage] || stage}`;
+                
+                if (data.completed) {
+                    document.getElementById("quiz-content").innerHTML = `<p>Ai completat deja această etapă!</p><p>Scor: ${data.score}pt</p><button class="btn" style="margin-top:20px;" onclick="location.href='../index.html'">Înapoi la meniu</button>`;
+                    return;
+                }
+
+                questions = data.questions;
+                startTime = Date.now();
+                showQuestion();
+            })
+            .catch(e => console.log(e));
+
+        function showQuestion() {
+            if(!questions || questions.length === 0) {
+                document.getElementById("quiz-content").innerHTML = `<p>Nu există întrebări pentru această etapă.</p>`;
+                return;
+            }
+            const q = questions[current];
+            let optionsHtml = '';
+            
+            if(q.option1) optionsHtml += `<button class="answer" onclick="answer(${q.correct_option === 1})">${q.option1}</button>`;
+            if(q.option2) optionsHtml += `<button class="answer" onclick="answer(${q.correct_option === 2})">${q.option2}</button>`;
+            if(q.option3) optionsHtml += `<button class="answer" onclick="answer(${q.correct_option === 3})">${q.option3}</button>`;
+            if(q.option4) optionsHtml += `<button class="answer" onclick="answer(${q.correct_option === 4})">${q.option4}</button>`;
+
+            document.getElementById("quiz-content").innerHTML = `
+                <p class="question">${q.question}</p>
+                <div class="answers">
+                    ${optionsHtml}
+                </div>
+            `;
+        }
+
+        function answer(isCorrect) {
+            if(isCorrect) correctCount++;
+            current++;
+            if(current < questions.length) {
+                showQuestion();
+            } else {
+                finish();
+            }
+        }
+
+        function finish() {
+            const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+            const timeLeft = Math.max(0, 60 - timeSpent); // Asumăm un timp pentru bonus
+
+            fetch("/submit-quiz", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ stage, correctCount, timeLeft })
+            })
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById("quiz-content").innerHTML = `
+                    <p>Quiz terminat!</p>
+                    <p>Scor obținut: ${data.score}pt</p>
+                    <button class="btn" style="margin-top:20px;" onclick="location.href='../index.html'">Înapoi la meniu</button>
+                `;
+            });
+        }
+
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.navbar').classList.toggle('active');
+            const toggle = document.querySelector('.menu-toggle');
+            toggle.classList.toggle('active');
+            if (toggle.classList.contains('active')) {
+                toggle.innerHTML = '✕';
+            } else {
+                toggle.innerHTML = '☰';
+            }
+        }
+    </script>
+
+</body>
+
+</html>

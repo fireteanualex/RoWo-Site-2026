@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Control | Rocket Workshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Tinos:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+
+<body>
+    <div class="stars-overlay"></div>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+            </div>
+            <div class="menu-toggle" onclick="toggleMenu()">
+    ☰
+</div>
+            <div class="nav-links">
+                <a href="../index.html#about">About</a>
+                <a href="../index.html#trainings">Trainings</a>
+                <a href="../index.html#faq">FAQ</a>
+                <a href="../index.html#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container" style="margin-top: 100px; min-height: 50vh;">
+        <section class="section-box about-layout">
+            <div class="section-label">
+                <h2 class="vertical-title">ADMIN</h2>
+            </div>
+            <div class="section-content">
+                <p class="highlight-text">Panou Control Server</p>
+                <p>Alege etapa activă pentru toți jucătorii:</p>
+                <div style="display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px;">
+                    <button class="btn" onclick="setStage(1)">Activează Etapa 1</button>
+                    <button class="btn" onclick="setStage(2)">Activează Etapa 2</button>
+                    <button class="btn" onclick="setStage(3)">Activează Etapa 3</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="laika-ascunsa-footer"></div>
+        <div class="container footer-grid">
+            <div class="footer-col brand-col">
+                <div class="footer-logo"></div>
+                <p>Construim viitorul ingineriei aerospațiale în România, un motor pe rând.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Navigație</h4>
+                <ul>
+                    <li><a href="../index.html#about">Despre Proiect</a></li>
+                    <li><a href="../index.html#trainings">Module Training</a></li>
+                    <li><a href="../index.html#faq">Întrebări Frecvente</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 EUROAVIA București. Realizat cu ❤️ de echipa IT.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function setStage(s) {
+            await fetch('/admin/set-stage', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ stage: s })
+            });
+            alert("Serverul a fost setat pe Etapa " + s);
+        }
+
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.navbar').classList.toggle('active');
+            const toggle = document.querySelector('.menu-toggle');
+            toggle.classList.toggle('active');
+            if (toggle.classList.contains('active')) {
+                toggle.innerHTML = '✕';
+            } else {
+                toggle.innerHTML = '☰';
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login | Rocket Workshop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&family=Tinos:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+
+<body>
+
+
+    <div class="stars-overlay"></div>
+
+    <div class="login-container">
+        <div class="login-box">
+
+            <h1>Login</h1>
+            <p class="subtitle">Accesează contul tău</p>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label>Nume Echipă</label>
+                    <input type="text" id="team_name" placeholder="ex: Echipa1" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Parolă</label>
+                    <input type="password" id="password" placeholder="••••••••" required>
+                </div>
+
+                <button type="submit" class="btn">Login</button>
+                <div style="margin-top: 15px; text-align: center;">
+                    <a href="../index.html"
+                        style="color: grey; text-decoration: none; font-size: 14px; transition: color 0.3s;"
+                        onmouseover="this.style.color='var(--accent-orange)'" onmouseout="this.style.color='grey'">
+                        ← Înapoi la pagina principală</a>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const team_name = document.getElementById('team_name').value;
+            const password = document.getElementById('password').value;
+
+            const res = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ team_name, password })
+            });
+
+            if (res.ok) {
+                localStorage.setItem('team_name', team_name);
+                window.location.href = '../index.html';
+            } else {
+                alert(await res.text());
+            }
+        });
+
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+            document.querySelector('.navbar').classList.toggle('active');
+            const toggle = document.querySelector('.menu-toggle');
+            toggle.classList.toggle('active');
+            if (toggle.classList.contains('active')) {
+                toggle.innerHTML = '✕';
+            } else {
+                toggle.innerHTML = '☰';
+            }
+        }
+    </script>
+    <script src="../auth.js"></script>
+
+</body>
+
+</html>
